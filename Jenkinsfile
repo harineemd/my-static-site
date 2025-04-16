@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/harineemd/my-static-website.git'
+                git 'https://github.com/harineemd/my-static-site.git'
             }
         }
 
