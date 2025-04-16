@@ -10,7 +10,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat 'docker build -t my-image .'
+                    bat '''docker build -t my-image .'''
                 }
             }
         }
@@ -19,11 +19,10 @@ pipeline {
             steps {
                 script {
                     // Stop and remove existing container if any
-                    bat '''
-                    docker stop my-running-container || exit 0
-                    docker rm my-running-container || exit 0
+                    bat '''docker stop my-running-container || exit 0
+                          docker rm my-running-container || exit 0
                     '''
-
+                    
                     // Check if port 8090 is in use
                     def portInUse = bat(script: 'netstat -an | findstr 8090', returnStdout: true).trim()
                     
@@ -36,7 +35,6 @@ pipeline {
                         // Run on port 8090 if available
                         bat "docker run -d -p 8090:80 --name my-running-container my-image"
                     }
-                    '''
                 }
             }
         }
