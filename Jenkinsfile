@@ -18,10 +18,10 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    // Optional: Stop existing container
+                    // Stop and remove existing container if any
                     bat '''
-                    docker stop my-running-container || true
-                    docker rm my-running-container || true
+                    docker stop my-running-container || exit 0
+                    docker rm my-running-container || exit 0
                     docker run -d -p 8090:80 --name my-running-container my-image
                     '''
                 }
