@@ -1,17 +1,16 @@
 pipeline {
     agent any
-
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/harineemd/my-static-site.git'
+                git(url: 'https://github.com/harineemd/my-static-site.git', branch: 'main')
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t my-image .'
+                    bat 'docker build -t my-image .'
                 }
             }
         }
@@ -20,7 +19,7 @@ pipeline {
             steps {
                 script {
                     // Optional: Stop existing container
-                    sh '''
+                    bat '''
                     docker stop my-running-container || true
                     docker rm my-running-container || true
                     docker run -d -p 8090:80 --name my-running-container my-image
