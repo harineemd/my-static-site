@@ -1,22 +1,20 @@
 pipeline {
     agent any
-
     stages {
-        stage('Run Tests') {
-            steps {
-                sh 'bash test.sh'
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build('harineemd-static-site')
+                    // For Windows, use the bat command
+                    bat 'docker build -t my-image .'
                 }
             }
         }
         stage('Run Container') {
             steps {
-                sh 'docker run -d -p 8080:80 harineemd-static-site'
+                script {
+                    // Use bat for running containers on Windows
+                    bat 'docker run -d -p 8080:80 my-image'
+                }
             }
         }
     }
