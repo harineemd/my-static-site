@@ -38,5 +38,11 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Render') {
+            steps {
+                bat 'curl -X POST https://api.render.com/deploy/srv-cvvnso3e5dus73cfupc0?key=nqXddJpr4ig'
+            }
+        }
+
     }
 }
